@@ -53,7 +53,7 @@ INSTALLED_APPS = [
 # settings.py
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',  # Add your Next.js frontend URL
+    'http://localhost:3000', 'https://xpedite-frontend.vercel.app'  # Add your Next.js frontend URL
 ]
 
 REST_FRAMEWORK = {
