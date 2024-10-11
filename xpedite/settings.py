@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework',
     'users',
+    'files',
+    'requests',
 ]
 
 # settings.py
@@ -100,25 +102,13 @@ WSGI_APPLICATION = 'xpedite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASE_URL = dj_database_url.config(conn_max_age=600, ssl_require=True)
-
-# Define DEV_DATABASE for development
-DEV_DATABASE = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+DATABASES = {
+    'default': dj_database_url.config(
+        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',  # Use SQLite as default for development
+        conn_max_age=600,  # Keeps connections alive for 600 seconds
+        ssl_require=os.getenv('SSL_REQUIRE') == 'True'   # Requires SSL for production databases
+    )
 }
-
-# Define the DATABASES setting
-if os.getenv('ENVIRONMENT') == 'PROD':
-    DATABASES = {
-        'default': DATABASE_URL  # DATABASE_URL should be inside a dictionary
-    }
-else:
-    DATABASES = DEV_DATABASE
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
