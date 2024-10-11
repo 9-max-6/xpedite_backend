@@ -101,25 +101,23 @@ WSGI_APPLICATION = 'xpedite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-
 DATABASE_URL = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
-DEV_DATABASE =  {
+# Define DEV_DATABASE for development
+DEV_DATABASE = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-# Define DATABASES setting
-# DATABASES = {
-#     'default': DATABASE_URL if DATABASE_URL else {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-DATABASES = DATABASE_URL if os.getenv('ENVIRONMENT') == 'PROD' else DEV_DATABASE
+# Define the DATABASES setting
+if os.getenv('ENVIRONMENT') == 'PROD':
+    DATABASES = {
+        'default': DATABASE_URL  # DATABASE_URL should be inside a dictionary
+    }
+else:
+    DATABASES = DEV_DATABASE
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
