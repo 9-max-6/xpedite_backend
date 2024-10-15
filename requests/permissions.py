@@ -6,7 +6,7 @@ class IsSupervisor(BasePermission):
     Custom permission for the manager
     """
     def has_permission(self, request, view):
-        if request.user.designation == 'SUP':
+        if request.user.is_sup:
             return True
         
 class IsManagement(BasePermission):
@@ -14,5 +14,6 @@ class IsManagement(BasePermission):
     Custom permission for the manager
     """
     def has_permission(self, request, view):
-        if request.user.designation == 'STAFF' or request.user.designation == 'MAN':
-            return True
+        if request.user.is_jet or request.user.is_sup:
+            return False
+        return True

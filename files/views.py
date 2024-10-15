@@ -1,14 +1,14 @@
 from django.http import HttpResponse
 from rest_framework.decorators import action
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated
+from requests.permissions import IsManagement
 from .models import File
 from .serializers import FileSerializer
 
 class FileViewSet(ModelViewSet):
     queryset = File.objects.all()
     serializer_class = FileSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsManagement]
 
     # Override the retrieve method to stream file contents stored in the database
     @action(detail=True, methods=['get'], url_path='bin')

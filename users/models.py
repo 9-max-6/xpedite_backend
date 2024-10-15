@@ -9,26 +9,29 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
 
     DESIGNATIONS = [
-            ('JET', 'JET'),
-        ('SUP', 'SUPERVISOR'),
-        ('MAN', 'MANAGER'),
+        ('JET', 'JET'),
+        ('DRC', 'DRC'),
+        ('RC', 'RC'),
+        ('RM', 'RM'),
         ('STAFF', 'STAFF'),
+        ('FIN', 'FIN'),
     ]
 
-    email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(_('email address'), unique=True, blank=False)
     first_name = models.CharField(_('first name'), max_length=30, blank=False)
     last_name = models.CharField(_('last name'), max_length=30, blank=False)
     region = models.CharField(_('region'), max_length=30, blank=False)
+    is_jet = models.BooleanField(default=False)
+    is_sup = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    is_rm = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     designation = models.CharField(
         max_length=15,
         choices=DESIGNATIONS,
         default='JET',
     )
-
     date_joined = models.DateTimeField(_('date joined'), auto_now_add=True)
-
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'

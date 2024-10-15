@@ -18,7 +18,17 @@ class CustomUserManager(BaseUserManager):
         if not extra_fields.get('designation'):
             raise ValueError('The Designation field must be set')
 
-        # check if the user has a designation of supervisor or finance
+        # Set specific roles based on designation
+        designation = extra_fields.get('designation')
+        role_flags = {
+            'JET': 'is_jet',
+            'RM': 'is_rm',
+            'DRC': 'is_sup',
+            'RC': 'is_sup',
+        }
+        if designation in role_flags:
+            extra_fields[role_flags[designation]] = True
+
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
