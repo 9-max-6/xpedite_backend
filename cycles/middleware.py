@@ -11,16 +11,18 @@ class SuperCycleMiddleware(MiddlewareMixin):
     def process_request(self, request):
         # Check if the 'supercycle' query parameter is missing
         supercycle_id = request.GET.get('supercycle', None)
-        
+        supercycle = None
+
         if supercycle_id:
             # Try to retrieve the SuperCycle object based on the provided supercycle ID
             try:
                 supercycle = SuperCycle.objects.get(id=supercycle_id)
             except SuperCycle.DoesNotExist:
-                supercycle = None
+                pass
         else:
             # If no supercycle parameter is provided, use the latest SuperCycle
             supercycle = SuperCycle.objects.order_by('-created_at').first()
+
         
         # Attach the supercycle object to the request
         request.supercycle = supercycle

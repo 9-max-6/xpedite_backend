@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import django_heroku
 import os
 import dj_database_url
+from datetime import timedelta
 from pathlib import Path
 
 
@@ -70,6 +71,14 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticated',
     # ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=300),  # Set token expiry time (e.g., 30 minutes)
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     # Set refresh token expiry time (e.g., 1 day)
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
 MIDDLEWARE = [

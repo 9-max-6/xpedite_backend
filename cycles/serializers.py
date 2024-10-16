@@ -5,6 +5,7 @@ class SuperCyCleSerializer(serializers.ModelSerializer):
     class Meta:
         model = SuperCycle
         fields = ['id', 'created_at']
+        read_only_fields = ['id', 'created_at']
 
 
 class CycleSerializer(serializers.ModelSerializer):

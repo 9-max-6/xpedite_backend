@@ -23,6 +23,8 @@ class Request(models.Model):
 
     comment = models.CharField(max_length=255)
     uploaded_at = models.DateTimeField(auto_now_add=True)
+    total = models.IntegerField()
+    description = models.TextField()
     reviewed_by = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='reviewer', null=True, blank=True)
     status = models.CharField(
         max_length=75,
@@ -38,3 +40,6 @@ class Request(models.Model):
         choices=status_options,
         blank=False
     )
+    total = models.IntegerField()
+    description = models.TextField()
+ 

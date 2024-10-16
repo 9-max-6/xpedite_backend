@@ -7,7 +7,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
     Custom user model where email is the unique identifier instead of username.
     """
-
     DESIGNATIONS = [
         ('JET', 'JET'),
         ('DRC', 'DRC'),

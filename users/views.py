@@ -13,11 +13,11 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action == 'me':
-            return [IsAuthenticated]
+            return [IsAuthenticated()]
         return super().get_permissions()
 
     @action(detail=False, methods=['get'], url_path='me')
-    def get_current_user(self, request):
+    def me(self, request):
         user = request.user
         serializer = self.get_serializer(user)
         return Response(serializer.data)
