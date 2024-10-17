@@ -7,6 +7,7 @@ class SuperCycle(models.Model):
     """super cycle"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     created_at = models.TimeField(auto_now=True)
+    title = models.CharField(blank=False, max_length=255)
 
 
 class Cycle(models.Model):

@@ -16,6 +16,7 @@ class Request(models.Model):
     ]
     type_options = [
         ('A', 'Activity Request'),
+        ('P', 'Activity Planner'),
         ('R', 'Expense Return'),
         ('E', 'Expense Claim'),
         ('C', 'Conference Request'),

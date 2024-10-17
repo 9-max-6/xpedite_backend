@@ -20,8 +20,11 @@ class SuperCycleMiddleware(MiddlewareMixin):
             except SuperCycle.DoesNotExist:
                 pass
         else:
+            try:
             # If no supercycle parameter is provided, use the latest SuperCycle
-            supercycle = SuperCycle.objects.order_by('-created_at').first()
+                supercycle = SuperCycle.objects.order_by('-created_at').first()
+            except SuperCycle.DoesNotExist:
+                return None
 
         
         # Attach the supercycle object to the request

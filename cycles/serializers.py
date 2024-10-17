@@ -4,7 +4,7 @@ from .models import SuperCycle, Cycle
 class SuperCyCleSerializer(serializers.ModelSerializer):
     class Meta:
         model = SuperCycle
-        fields = ['id', 'created_at']
+        fields = ['id', 'created_at', 'title']
         read_only_fields = ['id', 'created_at']
 
 

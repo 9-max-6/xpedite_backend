@@ -76,9 +76,6 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=300),  # Set token expiry time (e.g., 30 minutes)
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     # Set refresh token expiry time (e.g., 1 day)
-    'ROTATE_REFRESH_TOKENS': False,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
 MIDDLEWARE = [

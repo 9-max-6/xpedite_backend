@@ -4,11 +4,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 from cycles.models import Cycle
-from .models import ActivityPlanner, File
+from files.models import File
+from .models import Request
 from .serializers import RequestSerializerMin, RequestSerializerMax
 from .permissions import IsManagement, IsSupervisor
 
-class ActivityPlannerViewSet(viewsets.ModelViewSet):
+class RequestViewSet(viewsets.ModelViewSet):
     serializer_class = RequestSerializerMin
     permission_classes = [IsManagement]
 
