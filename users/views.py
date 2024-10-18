@@ -4,15 +4,20 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .models import CustomUser
 from .serializers import UserSerializer
+from requests.permissions import IsManagement
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]  # Ensure that only authenticated users can access these views
+    permission_classes = [IsManagement]
 
-    # Custom action to retrieve the current authenticated user
+    def get_permissions(self):
+        if self.action == 'me':
+            return [IsAuthenticated()]
+        return super().get_permissions()
+
     @action(detail=False, methods=['get'], url_path='me')
-    def get_current_user(self, request):
-        user = request.user  # This retrieves the user based on the JWT token
+    def me(self, request):
+        user = request.user
         serializer = self.get_serializer(user)
         return Response(serializer.data)

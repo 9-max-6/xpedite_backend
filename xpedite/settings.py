@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import django_heroku
 import os
 import dj_database_url
+from datetime import timedelta
 from pathlib import Path
 
 
@@ -47,6 +48,9 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework',
     'users',
+    'files',
+    'requests',
+    'cycles',
 ]
 
 # settings.py
@@ -60,12 +64,22 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+     'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',  # Enables the browsable API
+    ]
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticated',
     # ],
 }
 
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=300),  # Set token expiry time (e.g., 30 minutes)
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),     # Set refresh token expiry time (e.g., 1 day)
+}
+
 MIDDLEWARE = [
+    'cycles.middleware.SuperCycleMiddleware',
     'corsheaders.middleware.CorsMiddleware',  
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -100,25 +114,13 @@ WSGI_APPLICATION = 'xpedite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASE_URL = dj_database_url.config(conn_max_age=600, ssl_require=True)
-
-# Define DEV_DATABASE for development
-DEV_DATABASE = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+DATABASES = {
+    'default': dj_database_url.config(
+        default=f'sqlite:///{BASE_DIR / "db.sqlite3"}',  # Use SQLite as default for development
+        conn_max_age=600,  # Keeps connections alive for 600 seconds
+        ssl_require=os.getenv('SSL_REQUIRE') == 'True'   # Requires SSL for production databases
+    )
 }
-
-# Define the DATABASES setting
-if os.getenv('ENVIRONMENT') == 'PROD':
-    DATABASES = {
-        'default': DATABASE_URL  # DATABASE_URL should be inside a dictionary
-    }
-else:
-    DATABASES = DEV_DATABASE
-
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
@@ -145,11 +147,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
 
