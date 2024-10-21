@@ -30,7 +30,7 @@ django_heroku.settings(locals(), staticfiles=False)
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenviron('debug', True)
+DEBUG = os.getenv('debug', True)
 
 ALLOWED_HOSTS = ['xpedite-1487e9d7deba.herokuapp.com', '127.0.0.1', 'localhost']
 
