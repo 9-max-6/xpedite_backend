@@ -4,7 +4,7 @@ from .views import RequestViewSet
 
 # Create a router and register the viewset
 router = DefaultRouter()
-router.register(r'', RequestViewSet, basename='requests')
+router.register(r'', RequestViewSet, basename='')
 
 urlpatterns = [
     path('', include(router.urls)),  # Include the router-generated URLs

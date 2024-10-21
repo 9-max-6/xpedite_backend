@@ -25,6 +25,7 @@ class CustomUserManager(BaseUserManager):
             'RM': 'is_rm',
             'DRC': 'is_sup',
             'RC': 'is_sup',
+            'FIN': 'is_sup',
         }
         if designation in role_flags:
             extra_fields[role_flags[designation]] = True

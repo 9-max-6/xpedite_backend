@@ -11,4 +11,4 @@ class File(models.Model):
     # this relationship is defined in the requests.models module
 
     def __str__(self):
-        return f'{self.file_name} ({self.file_type})'
+        return f'{self.file_name}'

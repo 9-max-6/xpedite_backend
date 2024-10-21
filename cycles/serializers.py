@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import SuperCycle, Cycle
+from requests.serializers import RequestSerializerMin
 
 class SuperCyCleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,6 +10,7 @@ class SuperCyCleSerializer(serializers.ModelSerializer):
 
 
 class CycleSerializer(serializers.ModelSerializer):
+    requests = RequestSerializerMin()
     class Meta:
         model = Cycle
         fields = ['id', 'requests']
